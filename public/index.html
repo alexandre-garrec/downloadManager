@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="toastr.css" rel="stylesheet"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Download Manager</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+    <div class="container">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <h1>Download Manager</h1>
+
+    <input type="text" class="form-control" id="url" placeholder="URL">
+    <br/>
+    <button style="float: left" class="btn btn-default" onclick="download($('#url').val())">Download</button>
+
+    <br/>
+    <p style="float: right" id="infos"></p>
+    </div>
+
+
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+
+    <script>
+        var socket = io.connect('http://localhost:4876');
+        socket.on('bonjour', function (data) {
+            toastr.success(data.hello);
+        });
+
+        var total = 0;
+        socket.on('download', function (data) {
+            if (data.total) {
+                total = data.total;
+            }else{
+                if (data.count != total) {
+                    $( "#infos" ).text( Math.round(100*data.count /total) + " % " );
+                }
+                else{
+                    $( "#infos" ).text("Finalisation ...");
+                }
+            }
+        });
+    </script>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/toastr.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+</html>
