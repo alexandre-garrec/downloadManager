@@ -7,10 +7,11 @@ var express = require('express'),
     sqlite3 = require('sqlite3').verbose(),
     db = new sqlite3.Database('download.db');
 
+var _ = require('lodash');
 
 var io = require('socket.io').listen(4876);
 
-db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='file'",
+db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='file' ",
        function(err, rows) {
   if(err !== null) {
     console.log(err);
@@ -19,7 +20,7 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='file'",
     db.run('CREATE TABLE "file" ' +
            '("id" INTEGER PRIMARY KEY AUTOINCREMENT, ' +
            '"fileName" VARCHAR(255), ' +
-           'fileUrl VARCHAR(255))', function(err) {
+           '"fileUrl" VARCHAR(255), '+ ' "status" VARCHAR(10)' +' )' , function(err) {
       if(err !== null) {
         console.log(err);
       }
@@ -38,12 +39,12 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='file'",
 
 app.get('/file/', function(req, res) {
 
-  db.all('SELECT * FROM file', function(err, row) {
+  db.all('SELECT * FROM file ORDER BY id DESC', function(err, row) {
     if(err !== null) {
       res.send(500, "An error has occurred -- " + err);
     }
     else {
-      console.log(row);
+      //console.log(row);
 
         res.send({
             result: row
@@ -70,12 +71,13 @@ app.post('/download/',function(request,response){
     console.log(url);
     io.sockets.emit('bonjour', { hello: 'Download start' });
 
-    var download = new Download({ extract: true, strip: 1, mode: '755' })
+    var download = new Download({ extract: true, strip: 1, mode: '774' })
         .get(url)
         .dest('download').use(test());
         
 
     download.run(function (err, files, stream) {
+
         if (err) {
             result = err;
         }
@@ -87,13 +89,13 @@ app.post('/download/',function(request,response){
         });
     });
 
-    var sqlRequest = "INSERT INTO file (fileName, fileUrl) VALUES('test', '"+url+"')";
-  db.run(sqlRequest, function(err) {
-    if(err !== null) {
-      
+    var sqlRequest = "INSERT INTO file (fileName, fileUrl) VALUES('"+url.split("/")[(url.split("/").length - 1)]+"', '"+url+"')";
+    var te = db.run(sqlRequest, function(err) {
+      console.log(err )
+    if(err != null) {
+       console.log(err);
     }
     else {
-      console.log("error");
     }});
 
 });
