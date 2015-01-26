@@ -1,0 +1,65 @@
+.leftMenu{
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    width: 200px;
+    background-color: #212121;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    -webkit-transition: all 1s; /* For Safari 3.1 to 6.0 */
+    transition: all 1s;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+ul{
+    margin-top: 100px !important;
+    padding: 0px;
+}
+li{
+    padding: 20px;
+    list-style: none;
+    color: #fff;
+    border-bottom: 1px solid #424242;
+    -webkit-transition: all 100ms; /* For Safari 3.1 to 6.0 */
+    transition: all 100ms;
+}
+li:hover{
+    background-color: #424242;
+}
+li{
+    -webkit-transition: all 200ms; /* For Safari 3.1 to 6.0 */
+    transition: all 200ms;
+    padding-left: 20px;
+
+}
+.container{
+    margin-left: 220px !important;
+    width: auto !important;
+    margin-right: 20px !important;
+    -webkit-transition: all 1s; /* For Safari 3.1 to 6.0 */
+    transition: all 1s;
+}
+
+@media only screen and (max-width : 768px) 
+{ 
+ .container{
+        margin-left: 100px !important;
+        width: auto !important;
+        margin-right: 20px !important;
+    }
+    .leftMenu{
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: -120px;
+        width: 200px;
+        background-color: #212121;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    li{
+        text-align: right;
+    }
+}

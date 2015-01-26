@@ -8,8 +8,10 @@ var express = require('express'),
     db = new sqlite3.Database('download.db');
 
 var _ = require('lodash');
-
 var io = require('socket.io').listen(4876);
+
+var maxId = 0;
+
 
 db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='file' ",
        function(err, rows) {
@@ -31,9 +33,17 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='file' ",
   }
   else {
     console.log("SQL Table 'file' already initialized.");
+      db.each('SELECT MAX(id) FROM file', function(err, row) {
+      if(err !== null) {
+        res.send(500, "An error has occurred -- " + err);
+      }
+      else {
+        //console.log(row);
+        maxId = row['MAX(id)'];
+      }
+    });
   }
 });
-
 
 
 
@@ -66,7 +76,7 @@ io.sockets.on('connection', function (socket) {
 
 app.post('/download/',function(request,response){
     var url = request.body.url;
-    
+    maxId  = maxId + 1;
     url =  url.split("'")[1];
     console.log(url);
     io.sockets.emit('bonjour', { hello: 'Download start' });
@@ -89,7 +99,7 @@ app.post('/download/',function(request,response){
         });
     });
 
-    var sqlRequest = "INSERT INTO file (fileName, fileUrl) VALUES('"+url.split("/")[(url.split("/").length - 1)]+"', '"+url+"')";
+    var sqlRequest = "INSERT INTO file (fileName, fileUrl , status) VALUES('"+url.split("/")[(url.split("/").length - 1)]+"', '"+url+"' , 'done')";
     var te = db.run(sqlRequest, function(err) {
       console.log(err )
     if(err != null) {
@@ -103,7 +113,9 @@ app.post('/download/',function(request,response){
 
 var test = function (opts) {
     return function (res, url, cb) {
-        io.sockets.emit('download', { total: parseInt(res.headers['content-length'], 10)});
+        var idFile = maxId;
+
+        var totalSize = parseInt(res.headers['content-length'], 10);
         var count = 0;
 
         if (res.headers['content-length']) {
@@ -111,7 +123,7 @@ var test = function (opts) {
             res.on('data', function (data) {
                 count += data.length;
 
-                io.sockets.emit('download', { count: count });
+                io.sockets.emit('download', { id : idFile , count: count , total : totalSize});
 
             });
 

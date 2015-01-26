@@ -10,10 +10,10 @@ var handleErrors = require('./gulp/handleErrors');
 
 gulp.task('default', ['watch' , 'browser-sync']);
 
-gulp.task('watch' , ['less', 'js'], function(){
+gulp.task('watch' , [ 'js'], function(){
 
-    gulp.watch('public/style/*.less', ['less']);
-	gulp.watch('public/js/*.js', ['js',  browserSync.reload]);
+    gulp.watch('public/js/*.js', ['js',  browserSync.reload]);
+	gulp.watch('public/js/*/*.js', ['js',  browserSync.reload]);
 })
 gulp.task('browser-sync', function() {
     browserSync({

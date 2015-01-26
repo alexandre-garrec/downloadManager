@@ -2,49 +2,42 @@
 <html ng-app="downloadManager" lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
-    <link href="style/toastr.css" rel="stylesheet"/>
-    <style>
-    .leftMenu{
-        position: fixed;
-        top: 0px;
-        bottom: 0px;
-        left: 0px;
-        width: 200px;
-        background-color: #212121;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-    .container{
-        margin-left: 220px !important;
-        width: auto !important;
-        margin-right: 20px !important;
-    }
+    <title>Download Manager</title>
+    <link href="style/main.css" rel="stylesheet"/>
 
-    </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.7.0/angular-material.min.css">
+
 </head>
-<body ng-controller="FileController">
-    <nav class="leftMenu"></nav>
-    
-    <div class="container">
+<body>
+    <nav class="leftMenu">
+        <ul>
+            <a href="#"><li>Home</li></a>
+            <a href="#"><li>Files</li></a>
+        </ul>
+    </nav>
+
+    <div class="container" ng-controller="FileController">
 
     <h1>Download Manager</h1>
 
-    <input type="text" class="form-control" id="url" placeholder="URL">
-    <br/>
-    <button ng-click='onReset()' style="float: left" class="btn btn-default" onclick="download($('#url').val())">Download</button>
 
-    <br/>
-    <p style="float: right" id="infos"></p>
+    <md-input-container flex>
+        <label>URL</label>
+        <input ng-model="file.url" placeholder="">
+    </md-input-container>
+
+    <md-button ng-click='download()' class="md-primary">Download</md-button>
+
     <br/>
     <br/>
 
     <table class="table table-striped">
         <tbody>
         <tr  ng-repeat="item in files">
-          <th scope="row">{{ item.id }}</th>
           <td>{{ item.fileName }}</td>
           <td>{{ item.fileUrl }}</td>
+          <td>{{ item.status }}</td>
         </tr>
       </tbody>
     </table>
@@ -52,13 +45,17 @@
 
     </div>
 
-    
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>    
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.min.js"></script>
 
+
+    <!-- Angular Material Javascript now available via Google CDN; version 0.7 used here -->
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.7.0/angular-material.min.js"></script>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>    
+    <script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
     <script src="js/libs/jquery.js"></script>
-    <script src="js/libs/toastr.js"></script>
-    <script src="js/script.js"></script>
     <script src="js/bundle.js"></script>
 
 
