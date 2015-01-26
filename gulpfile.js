@@ -11,15 +11,19 @@ var handleErrors = require('./gulp/handleErrors');
 gulp.task('default', ['watch' , 'browser-sync']);
 
 gulp.task('watch' , [ 'js'], function(){
-
+    gulp.watch('public/*.html', browserSync.reload);
+    gulp.watch('public/style/*.css',  browserSync.reload({stream:true}));
     gulp.watch('public/js/*.js', ['js',  browserSync.reload]);
 	gulp.watch('public/js/*/*.js', ['js',  browserSync.reload]);
+
+
+   
 })
 gulp.task('browser-sync', function() {
     browserSync({
-        server: {
-            baseDir: "./public"
-        }
+        options: {
+         proxy: "localhost:3454"
+     }
     });
 });
 
