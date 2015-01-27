@@ -15,8 +15,6 @@ gulp.task('watch' , [ 'js'], function(){
     gulp.watch('public/style/*.css',  browserSync.reload({stream:true}));
     gulp.watch('public/js/*.js', ['js',  browserSync.reload]);
 	gulp.watch('public/js/*/*.js', ['js',  browserSync.reload]);
-
-
    
 })
 gulp.task('browser-sync', function() {

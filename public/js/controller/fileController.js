@@ -14,7 +14,8 @@ function FileController($scope, $http, $mdToast , socket) {
 
 
 	socket.on('bonjour', function (data) {
-	        $mdToast.show( $mdToast.simple().content(data.hello).position('top right').hideDelay(700));
+	    $mdToast.show( $mdToast.simple().content(data.hello).position('top right').hideDelay(700));
+	    $scope.onReset();
 	});
 
 	socket.on('download', function (data) {
@@ -22,10 +23,11 @@ function FileController($scope, $http, $mdToast , socket) {
         if (data.count != data.total) {
             //$( "#infos" ).text( Math.round(100*data.count /total) + " % " );
             $scope.files[$scope.files.length - data.id].status = Math.round(100*data.count /data.total) + " % ";
+            $scope.files[$scope.files.length - data.id].determinateValue = 100*data.count /data.total;
         }
         else{
 
-            //$( "#infos" ).text("Finalisation ...");
+            $scope.files[$scope.files.length - data.id].status = "Finalisation ...";
         }
 	});
 

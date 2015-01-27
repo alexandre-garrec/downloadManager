@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
      <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.7.0/angular-material.min.css">
+     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 </head>
 <body>
@@ -18,10 +19,9 @@
         </ul>
     </nav>
 
-    <div class="container" ng-controller="FileController">
+    <div class="container" flex ng-controller="FileController">
 
     <h1>Download Manager</h1>
-
 
     <md-input-container flex>
         <label>URL</label>
@@ -34,15 +34,28 @@
     <br/>
 
 
-    <table class="table table-striped">
-        <tbody>
-        <tr  ng-repeat="item in files">
-          <td>{{ item.fileName }}</td>
-          <td>{{ item.fileUrl }}</td>
-          <td>{{ item.status }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <md-content>
+        <md-list>
+          <md-item ng-repeat="item in files">
+            <md-item-content>
+              <div class="md-tile-left">
+                <i style="font-size : 34px" class="fa fa-rocket"></i>
+              </div>
+              <div class="md-tile-content">
+                <h3>{{item.fileName}}</h3>
+                <h4>{{item.fileUrl}}</h4>
+                <p>Status : {{item.status}}</p>
+               
+
+                <md-progress-linear ng-if="item.determinateValue != null" class="md-accent" md-mode="determinate" value="{{item.determinateValue}}"></md-progress-linear>
+              </div>
+            </md-item-content>
+
+          </md-item>
+        </md-list>
+    </md-content>
+
+
 
     </div>
 

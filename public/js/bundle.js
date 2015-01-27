@@ -6805,7 +6805,8 @@ function FileController($scope, $http, $mdToast , socket) {
 
 
 	socket.on('bonjour', function (data) {
-	        $mdToast.show( $mdToast.simple().content(data.hello).position('top right').hideDelay(700));
+	    $mdToast.show( $mdToast.simple().content(data.hello).position('top right').hideDelay(700));
+	    $scope.onReset();
 	});
 
 	socket.on('download', function (data) {
@@ -6813,10 +6814,11 @@ function FileController($scope, $http, $mdToast , socket) {
         if (data.count != data.total) {
             //$( "#infos" ).text( Math.round(100*data.count /total) + " % " );
             $scope.files[$scope.files.length - data.id].status = Math.round(100*data.count /data.total) + " % ";
+            $scope.files[$scope.files.length - data.id].determinateValue = 100*data.count /data.total;
         }
         else{
 
-            //$( "#infos" ).text("Finalisation ...");
+            $scope.files[$scope.files.length - data.id].status = "Finalisation ...";
         }
 	});
 
@@ -6901,7 +6903,7 @@ downloadManager.factory('socket', function ($rootScope) {
   };
 });
 
-}).call(this,require("+7ZJp0"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_faba209a.js","/")
+}).call(this,require("+7ZJp0"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_6c55df1d.js","/")
 },{"+7ZJp0":7,"./controller/fileController":2,"buffer":4}],4:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*!
