@@ -6818,7 +6818,7 @@ function FileController($scope, $http, $mdToast , socket) {
         }
         else{
 
-            $scope.files[$scope.files.length - data.id].status = "Finalisation ...";
+            $scope.files[$scope.files.length - data.id].status = "Finalisation...";
         }
 	});
 
@@ -6869,15 +6869,15 @@ module.exports = FileController;
 
 
 
-}).call(this,require("+7ZJp0"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controller/fileController.js","/controller")
+}).call(this,require("+7ZJp0"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controllers/fileController.js","/controllers")
 },{"+7ZJp0":7,"buffer":4,"lodash":1}],3:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
 
-var downloadManager = angular.module('downloadManager', ['ngMaterial']);
+var downloadManager = angular.module('downloadManager', ['ngMaterial' , 'ngRoute']);
 
-downloadManager.controller('FileController', require('./controller/fileController'));
+downloadManager.controller('FileController', require('./controllers/fileController'));
 
 downloadManager.factory('socket', function ($rootScope) {
   var socket = io.connect('http://localhost:4876');
@@ -6903,8 +6903,18 @@ downloadManager.factory('socket', function ($rootScope) {
   };
 });
 
-}).call(this,require("+7ZJp0"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_6c55df1d.js","/")
-},{"+7ZJp0":7,"./controller/fileController":2,"buffer":4}],4:[function(require,module,exports){
+
+downloadManager.config(['$routeProvider', '$locationProvider', function($routeProvider) {
+    $routeProvider
+        .when('/home', {templateUrl: 'partials/home.html' ,  controller: 'FileController'})
+        .when('/files', {templateUrl: 'partials/files.html' , controller: 'FileController'})
+        .when('/parameters', {templateUrl: 'partials/parameters.html' , controller: 'FileController'})
+
+        .otherwise({redirectTo: '/home'});
+}]);
+
+}).call(this,require("+7ZJp0"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_4abcc807.js","/")
+},{"+7ZJp0":7,"./controllers/fileController":2,"buffer":4}],4:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*!
  * The buffer module from node.js, for the browser.

@@ -70,7 +70,7 @@ app.use(express.static(__dirname + '/public'));
 
 io.sockets.on('connection', function (socket) {
     console.log('Un client est connecté !');
-    socket.emit('bonjour', { hello: 'Bonjour' });
+    socket.emit('bonjour', { hello: 'Bonjour !' });
 });
 
 app.post('/download/',function(request,response){

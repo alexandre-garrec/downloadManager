@@ -1,0 +1,32 @@
+<h1>Download Manager</h1>
+
+<md-input-container flex>
+    <label>URL</label>
+    <input ng-model="file.url" placeholder="">
+</md-input-container>
+
+<md-button ng-click='download()' class="md-primary">Download</md-button>
+
+<br/>
+<br/>
+
+
+<md-content>
+    <md-list>
+      <md-item ng-repeat="item in files">
+        <md-item-content>
+          <div class="md-tile-left">
+            <i style="font-size : 34px" class="fa fa-rocket"></i>
+          </div>
+          <div class="md-tile-content">
+            <h3>{{item.fileName}}</h3>
+            <h4>{{item.fileUrl}}</h4>
+            <p>Status : {{item.status}}</p>
+
+            <md-progress-linear ng-if="item.determinateValue != null" class="md-accent" md-mode="determinate" value="{{item.determinateValue}}"></md-progress-linear>
+          </div>
+        </md-item-content>
+
+      </md-item>
+    </md-list>
+</md-content>

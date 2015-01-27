@@ -15,7 +15,7 @@ a{
 }
 
 ul{
-    margin-top: 100px !important;
+
     padding: 0px;
 }
 li{
@@ -46,7 +46,7 @@ li{
 @media only screen and (max-width : 768px) 
 { 
  .container{
-        margin-left: 100px !important;
+        margin-left: 0px !important;
         width: auto !important;
         margin-right: 20px !important;
     }
@@ -54,12 +54,9 @@ li{
         position: fixed;
         top: 0px;
         bottom: 0px;
-        left: -120px;
+        left: -200px;
         width: 200px;
         background-color: #212121;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-    li{
-        text-align: right;
     }
 }

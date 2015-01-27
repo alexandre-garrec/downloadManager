@@ -27,7 +27,7 @@ function FileController($scope, $http, $mdToast , socket) {
         }
         else{
 
-            $scope.files[$scope.files.length - data.id].status = "Finalisation ...";
+            $scope.files[$scope.files.length - data.id].status = "Finalisation...";
         }
 	});
 

@@ -1,9 +1,9 @@
 'use strict';
 
 
-var downloadManager = angular.module('downloadManager', ['ngMaterial']);
+var downloadManager = angular.module('downloadManager', ['ngMaterial' , 'ngRoute']);
 
-downloadManager.controller('FileController', require('./controller/fileController'));
+downloadManager.controller('FileController', require('./controllers/fileController'));
 
 downloadManager.factory('socket', function ($rootScope) {
   var socket = io.connect('http://localhost:4876');
@@ -28,3 +28,13 @@ downloadManager.factory('socket', function ($rootScope) {
     }
   };
 });
+
+
+downloadManager.config(['$routeProvider', '$locationProvider', function($routeProvider) {
+    $routeProvider
+        .when('/home', {templateUrl: 'partials/home.html' ,  controller: 'FileController'})
+        .when('/files', {templateUrl: 'partials/files.html' , controller: 'FileController'})
+        .when('/parameters', {templateUrl: 'partials/parameters.html' , controller: 'FileController'})
+
+        .otherwise({redirectTo: '/home'});
+}]);

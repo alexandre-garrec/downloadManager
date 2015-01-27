@@ -12,51 +12,17 @@
 </head>
 <body>
     <nav class="leftMenu">
+    <i style="font-size: 150px; color :#fff; padding: 30px" class="fa fa-rocket"></i>
         <ul>
-            <a href="#"><li>Home</li></a>
-            <a href="#"><li>Files</li></a>
-            <a href="#"><li>Parameters</li></a>
+            <a href="#/home"><li>Home</li></a>
+            <a href="#/files"><li>Files</li></a>
+            <a href="#/parameters"><li>Parameters</li></a>
         </ul>
     </nav>
 
-    <div class="container" flex ng-controller="FileController">
-
-    <h1>Download Manager</h1>
-
-    <md-input-container flex>
-        <label>URL</label>
-        <input ng-model="file.url" placeholder="">
-    </md-input-container>
-
-    <md-button ng-click='download()' class="md-primary">Download</md-button>
-
-    <br/>
-    <br/>
-
-
-    <md-content>
-        <md-list>
-          <md-item ng-repeat="item in files">
-            <md-item-content>
-              <div class="md-tile-left">
-                <i style="font-size : 34px" class="fa fa-rocket"></i>
-              </div>
-              <div class="md-tile-content">
-                <h3>{{item.fileName}}</h3>
-                <h4>{{item.fileUrl}}</h4>
-                <p>Status : {{item.status}}</p>
-               
-
-                <md-progress-linear ng-if="item.determinateValue != null" class="md-accent" md-mode="determinate" value="{{item.determinateValue}}"></md-progress-linear>
-              </div>
-            </md-item-content>
-
-          </md-item>
-        </md-list>
-    </md-content>
-
-
-
+    <div class="container" flex>
+        <div ng-view>
+        </div>
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
@@ -66,6 +32,7 @@
 
     <!-- Angular Material Javascript now available via Google CDN; version 0.7 used here -->
     <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.7.0/angular-material.min.js"></script>
+    <script src="https://code.angularjs.org/1.3.9/angular-route.min.js"></script>
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>    
     <script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
